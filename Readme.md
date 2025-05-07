@@ -64,20 +64,12 @@
 </div>
 
 
-<div>
-    <h2>Real world applications:</h2>
-    <p>
-        If we have multiple microservices to send data, we have 3 methods: through REST APIs (takes more time and if 1 service is down then we have to call 2nd task again which is tough/helerious task which lead to data loss), queuing system (fast, memory-efficient, low load on server, donot loose data in case of server down), Websocket (require so much in memory)
-    </p>
-</div>
+**Real world applications:**
+If we have multiple microservices to send data, we have 3 methods: through REST APIs (takes more time and if 1 service is down then we have to call 2nd task again which is tough/helerious task which lead to data loss), queuing system (fast, memory-efficient, low load on server, donot loose data in case of server down), Websocket (require so much in memory).
 
 
-<div>
-    <h2>Conclusion:</h2>
-    <p>
-        The system uses Redis Streams and Consumer Groups to ensure that messages are distributed among consumers in a group, with each message processed by only one consumer. <br>
-        This approach is efficient for microservices communication, avoiding data loss and reducing server load compared to REST APIs or WebSockets. <br>
-        The docker-compose.yaml file (not detailed here) likely sets up the Redis server container for local development.<br>
-        In summary, this project demonstrates a Redis-based Pub/Sub system leveraging Redis Streams and Consumer Groups to build a robust data streaming and processing pipeline.
-    </p>
-</div>
+##  Conclusion:
+The system uses Redis Streams and Consumer Groups to ensure that messages are distributed among consumers in a group, with each message processed by only one consumer. <br>
+This approach is efficient for microservices communication, avoiding data loss and reducing server load compared to REST APIs or WebSockets. <br>
+The docker-compose.yaml file (not detailed here) likely sets up the Redis server container for local development.<br>
+In summary, this project demonstrates a Redis-based Pub/Sub system leveraging Redis Streams and Consumer Groups to build a robust data streaming and processing pipeline.
