@@ -4,66 +4,61 @@
 <div>
     <p>
         The given project implements a system called a "Redis Publish-Subscribe (Pub/Sub) system" using Redis Streams and Consumer Groups. The system is designed to handle a large number of producers and consumers, and it provides a way to decouple the producers and consumers, making it easier to scale and maintain the system. <br>
-
         The whole idea of this system is to enable efficient, reliable, and scalable asynchronous communication between different components (such as microservices) by streaming data through Redis.
     </p>
 </div>
 <div>
     <h2>Impotant Terms: </h2>
     <ul>
-        <li>**Stream**: A Redis data structure that stores an append-only log of messages. It is like a data pipeline which stores data, then it will stream the data with each group</li> 
-        <li>**Group**: A consumer group that allows multiple consumers to share the workload of processing messages from a stream.</li> 
-        <li>**Producer**: The component that publishes data (orders) into the Redis stream.</li> 
-        <li>**Consumer**: The component that reads and processes data from the Redis stream as part of a consumer group. If we have 5 consumer in a group, then only one consumer will have the access of data.</li>
+        <li><strong>Stream</strong>: A Redis data structure that stores an append-only log of messages. It is like a data pipeline which stores data, then it will stream the data with each group</li> 
+        <li><strong>Group</strong>: A consumer group that allows multiple consumers to share the workload of processing messages from a stream.</li> 
+        <li><strong>Producer</strong>: The component that publishes data (orders) into the Redis stream.</li> 
+        <li><strong>Consumer<strong>: The component that reads and processes data from the Redis stream as part of a consumer group. If we have 5 consumer in a group, then only one consumer will have the access of data.</li>
     </ul>
     <p>
-        
         In this system: <br>
-
-        A Producer publishes data (in this case, order information) into a Redis Stream.
-        The Stream acts as a data pipeline that stores the messages.
-        Multiple Consumer Groups are created, each containing one or more Consumers.
-        Each Consumer Group processes the stream independently, and within a group, each message is delivered to only one Consumer, ensuring workload distribution.
-        This architecture allows multiple services to consume the same data stream without interfering with each other, providing fault tolerance and scalability.
+        A Producer publishes data (in this case, order information) into a Redis Stream. <br>
+        The Stream acts as a data pipeline that stores the messages. <br>
+        Multiple Consumer Groups are created, each containing one or more Consumers. <br>
+        Each Consumer Group processes the stream independently, and within a group, each message is delivered to only one Consumer, ensuring workload distribution. <br>
+        This architecture allows multiple services to consume the same data stream without interfering with each other, providing fault tolerance and scalability. <br>
         This system is particularly useful for scenarios where multiple microservices need to process the same data asynchronously, avoiding the drawbacks of REST APIs or WebSockets, such as latency, data loss, or high memory usage.
-
-   
     </p>
 </div>
 <div>
     <h2>Steps to execute this file</h2>
     <ol>
         <li>Start docker engine.</li>
-        <li>Exute the docker compose file using command `docker-compose up`</li>
-        <li>Execute the initialization_stram file using command `python -m initialization_stream`</li>
-        <li>Execute the producer file using command `python -m producer`<li>
-        <li>Execute the consumer1 file using command `python -m consumer1`<li>
-        <li>Execute the consumer2 file using command `python -m consumer2`<li>
+        <li>Exute the docker compose file using command <code>docker-compose up</code></li>
+        <li>Execute the initialization_stram file using command <code>python -m initialization_stream</code></li>
+        <li>Execute the producer file using command <code>python -m producer</code><li>
+        <li>Execute the consumer1 file using command <code>python -m consumer1</code><li>
+        <li>Execute the consumer2 file using command <code>python -m consumer2</code><li>
     </ol>
 </div>
  
 <div>
     <h3> Code Explaination</h3>
     <p>
-        **Redis Connection Setup (`redisPool.py`)** <br>
+        <strong>Redis Connection Setup (<code>redisPool.py</code>)</strong> <br>
         The redisPool.py file defines an asynchronous function redis_connect that creates a Redis connection pool using the redis.asyncio library. It connects to Redis at localhost:6379 with a maximum of 5 connections and UTF-8 decoding enabled. This connection is used by the producer and consumers to interact with Redis. <br>
     </p>
     <p>
-        **Stream and Consumer Group Initialization (`initialization_strem.py`)**
+        <strong>Stream and Consumer Group Initialization (<code>initialization_strem.py</code>)</strong>
         This script initializes the Redis stream and consumer groups. It defines a stream key orders and two consumer groups: email_group and fulfillment_group. The async function initialize_streams_and_groups creates these consumer groups on the stream if they do not already exist, handling the case where groups are already present. <br>
     </p>
     <p>
-        **Producer (`producer.py`)**
+        <strong>Producer (<code>producer.py</code>)</strong>
         The producer asynchronously publishes order data to the orders stream. It serializes relevant order information (order ID and customer email) as JSON and adds it to the stream using the Redis XADD command. This simulates pushing new orders into the data pipeline.
     </p>
     <p>
-        **Consumers (`consumer1.py` and `consumer2.py`)**
-        `consumer1.py` acts as a consumer in the fulfillment_group consumer group with the consumer name email_consumer. It reads messages from the orders stream using the XREADGROUP command, processes each order by printing fulfillment information, and acknowledges the message to Redis. <br>
-        `consumer2.py` acts as a consumer in the email_group consumer group with the consumer name fulfillment_consumer. It similarly reads messages, prints raw message data, processes fulfillment, and acknowledges messages.
+        <strong>Consumers (<code>consumer1.py</code> and <code>consumer2.py</code>)</strong>
+        <code>consumer1.py</code> acts as a consumer in the fulfillment_group consumer group with the consumer name email_consumer. It reads messages from the orders stream using the XREADGROUP command, processes each order by printing fulfillment information, and acknowledges the message to Redis. <br>
+        <code>consumer2.py</code> acts as a consumer in the email_group consumer group with the consumer name fulfillment_consumer. It similarly reads messages, prints raw message data, processes fulfillment, and acknowledges messages.
         Both consumers continuously poll for new messages, blocking for up to 5 seconds if none are available.<br>
     </p>
     <p>
-        **Configuration (`config.py`)**
+        <strong>Configuration (<code>config.py<code>)</strong>
         Contains Redis connection settings such as the Redis URL and maximum connections. These settings are referenced in the Redis connection setup but currently hardcoded values are used.
     </p>
 </div>
