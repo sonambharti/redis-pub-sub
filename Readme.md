@@ -45,7 +45,7 @@ This system is particularly useful for scenarios where multiple microservices ne
     Both consumers continuously poll for new messages, blocking for up to 5 seconds if none are available.<br>
 
 &nbsp;**Note:** <br>
-&nbsp;&nbsp; -    Consumer having same group and same stream, will get the data produced by procer via load balancer. i.e. data will be distributed evenly between the consumers.
+&nbsp;&nbsp; -    Consumer having same group and same stream, will get the data produced by procer via load balancer. i.e. data will be distributed evenly between the consumers. <br>
 &nbsp;&nbsp; -    Where as, Consumer having different group with same streams will get same data as it is.
     
 
