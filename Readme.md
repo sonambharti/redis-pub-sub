@@ -44,9 +44,9 @@ This system is particularly useful for scenarios where multiple microservices ne
     `consumer2.py` acts as a consumer in the email_group consumer group with the consumer name fulfillment_consumer. It similarly reads messages, prints raw message data, processes fulfillment, and acknowledges messages. <br>
     Both consumers continuously poll for new messages, blocking for up to 5 seconds if none are available.<br>
 
-&nsbp;**Note:** <br>
-&nsbp;&nsbp; -    Consumer having same group and same stream, will get the data produced by procer via load balancer. i.e. data will be distributed evenly between the consumers.
-&nsbp;&nsbp; -    Where as, Consumer having different group with same streams will get same data as it is.
+&nbsp;**Note:** <br>
+&nbsp;&nbsp; -    Consumer having same group and same stream, will get the data produced by procer via load balancer. i.e. data will be distributed evenly between the consumers.
+&nbsp;&nbsp; -    Where as, Consumer having different group with same streams will get same data as it is.
     
 
 **Configuration (`config.py`)**<br>
