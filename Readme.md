@@ -44,6 +44,12 @@ This system is particularly useful for scenarios where multiple microservices ne
     `consumer2.py` acts as a consumer in the email_group consumer group with the consumer name fulfillment_consumer. It similarly reads messages, prints raw message data, processes fulfillment, and acknowledges messages. <br>
     Both consumers continuously poll for new messages, blocking for up to 5 seconds if none are available.<br>
 
+    <strong>Note:</strong><br>
+    <ul>
+        <li>Consumer having same group and same stream, will get the data produced by procer via load balancer. i.e. data will be distributed evenly between the consumers.</li>
+        <li>Where as, Consumer having different group with same streams will get same data as it is.</li>
+    </ul>
+
 **Configuration (`config.py`)**<br>
     Contains Redis connection settings such as the Redis URL and maximum connections. These settings are referenced in the Redis connection setup but currently hardcoded values are used. <br>
 
